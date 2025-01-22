@@ -1,8 +1,9 @@
-export function MailSideBar() {
+const { useState, useEffect } = React
 
-    function openMenuFilter(){
-        
-    }
+export function MailSideBar(isFilterOpen, onOpenFilter) {
+
+    // const [isFilterOpenHere, setFilter] = useState(isFilterOpen)
+
     return (
         <React.Fragment>
             <div className="mail-side-bar">

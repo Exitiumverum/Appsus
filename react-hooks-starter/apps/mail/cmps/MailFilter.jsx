@@ -1,7 +1,8 @@
-export function MailFilter() {
+export function MailFilter({isFilterOpen}) {
+
     return (
         // <React.Fragment>
-        <section className="mail-filter-section">
+        <section className={`mail-filter-section ${isFilterOpen ? 'filter-open' : 'filter-closed'}`}>
             <div className="mail-filter-item filter-compose">Compose</div>
             <div className="mail-filter-item filter-inbox">Inbox</div>
             <div className="mail-filter-item filter-starred">Starred</div>

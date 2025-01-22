@@ -10,7 +10,7 @@ const { useState, useEffect } = React
 export function MailIndex() {
 
     const [mails, setMails] = useState(null)
-
+    const [isFilterOpen, setIsFilterOpen] = useState(true)
 
     useEffect(() => {
         loadMails()
@@ -26,17 +26,22 @@ export function MailIndex() {
             })
     }
 
+    function onOpenFilter(){
+        console.log('pressed')
+        setIsFilterOpen(prevState => !prevState)
+    }
+
     if (!mails) return <div>Loading...</div>
     return (
         <section className="mail-index">
-            <MailSideBar />
+            <MailSideBar onOpenFilter={onOpenFilter} />
             <div className='mail-header-body'>
                 <MailHeader />
                 <div className="mail-body">
-                    <MailFilter />
+                    <MailFilter isFilterOpen={isFilterOpen}/>
                     <React.Fragment>
 
-                        <MailList mails={mails} />
+                        <MailList mails={mails} isFilterOpen={isFilterOpen} />
                     </React.Fragment>
                 </div>
             </div>

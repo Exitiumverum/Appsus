@@ -7,3 +7,7 @@
     border-radius: 8px;
     width: 100%;
  }
+
+ .mail-list.filter-open{
+   margin-left: 7.6em;
+ }
