@@ -7,7 +7,6 @@ export function NoteImg({ note }) {
             ) : (
                 <p>No image available</p>
             )}
-            {note.info.title && <h4>{note.info.title}</h4>}
         </div>
     )
 }
