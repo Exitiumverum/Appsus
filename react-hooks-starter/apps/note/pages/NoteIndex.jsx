@@ -70,6 +70,12 @@ export function NoteIndex() {
         setTimeout(() => setErrorMsg(''), 3000)
     }
 
+    function onTogglePin(noteId) {
+        noteService.togglePin(noteId)
+            .then(() => loadNotes())
+            .catch(() => displayError('Failed to pin/unpin note'))
+    }
+
     return (
         <section className="note-index">
             <div className="note-add">
@@ -91,6 +97,7 @@ export function NoteIndex() {
                 notes={notes}
                 onRemoveNote={onRemoveNote}
                 onUpdateNote={onUpdateNote} // Pass this function to handle note updates
+                onTogglePin={onTogglePin} // Pass this function to handle pin toggling
             />
         </section>
     )

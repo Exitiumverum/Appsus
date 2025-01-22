@@ -8,7 +8,8 @@ export const noteService = {
     save,
     remove,
     getEmptyNote,
-    updateNote, // Added update method
+    updateNote,
+    togglePin,
 }
 
 // Fetch notes (from storage or create default ones)
@@ -43,6 +44,15 @@ function updateNote(updatedNote) {
         if (idx === -1) throw new Error('Note not found')
         notes[idx] = updatedNote
         return storageService.put(NOTE_KEY, updatedNote)
+    })
+}
+
+function togglePin(noteId) {
+    return query().then(notes => {
+        const note = notes.find(note => note.id === noteId)
+        if (!note) throw new Error('Note not found')
+        note.isPinned = !note.isPinned // Toggle the pin status
+        return storageService.put(NOTE_KEY, note)
     })
 }
 
