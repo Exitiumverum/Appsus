@@ -1,20 +1,16 @@
-/* General Note Preview */
+/* Individual Note Container */
 .note-preview {
-    width: 250px; /* Fixed width */
-    height: 200px; /* Fixed height */
-    padding: 1rem;
-    border-radius: 12px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
     overflow: hidden;
 }
 
-/* Hover Effect */
 .note-preview:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
@@ -25,25 +21,25 @@
     flex-grow: 1;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-align: center;
+    word-wrap: break-word;
     max-height: 100px;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
-/* Images in Notes */
+/* Image Notes */
 .note-content img {
     max-width: 100%;
-    max-height: 80px;
-    object-fit: contain; /* Ensure image fits without distortion */
-    margin-bottom: 0.5rem;
-    border-radius: 6px;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
-/* Action Buttons */
+/* Note Actions */
 .note-actions {
     display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-top: 0.5rem;
+    justify-content: space-between;
+    margin-top: 1rem;
 }
 
 .note-actions button {
@@ -56,16 +52,7 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.btn-edit {
-    background-color: #42a5f5;
-    color: white;
-}
-
-.btn-edit:hover {
-    background-color: #1e88e5;
-    transform: scale(1.05);
-}
-
+/* Pin Button */
 .btn-pin {
     background-color: #ffca28;
     color: #333;
@@ -76,6 +63,7 @@
     transform: scale(1.05);
 }
 
+/* Remove Button */
 .btn-remove {
     background-color: #e57373;
     color: white;
@@ -83,5 +71,16 @@
 
 .btn-remove:hover {
     background-color: #d32f2f;
+    transform: scale(1.05);
+}
+
+/* Edit Button */
+.btn-edit {
+    background-color: #42a5f5;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #1e88e5;
     transform: scale(1.05);
 }
