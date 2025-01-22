@@ -1,0 +1,14 @@
+.mail{
+    display: flex;
+    /* gap: 0.3em; */
+    align-items: center;
+    justify-content: space-between;
+}
+
+ul{
+        list-style-type: none;
+}
+
+.mail-date{
+    align-self: flex-end;
+}

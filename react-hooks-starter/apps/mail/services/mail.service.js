@@ -24,6 +24,7 @@ function __createDemoMail() {
         sentAt: 1737533108,
         removedAt: null,
         from: 'momo@momo.com',
+        name: 'Momo',
         to: 'avi@gmail.com'
     },
     {

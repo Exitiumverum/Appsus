@@ -23,6 +23,13 @@
 
 @import './apps/mail/cmps/MailList.css';
 @import './apps/mail/cmps/Mailheader.css';
+@import './apps/mail/cmps/MailFilter.css';
+@import './apps/mail/cmps/MailSideBar.css';
+@import './apps/mail/cmps/mail.css';
+@import './apps/mail/cmps/mail-logo.css';
+@import './apps/mail/cmps/mail-list-container.css';
+@import './apps/mail/cmps/mail-filter-section.css';
+@import './apps/mail/cmps/mail-body.css';
 /* @import './apps/mail/cmps/MailList.css'; */
 
 /* Note CSS */
