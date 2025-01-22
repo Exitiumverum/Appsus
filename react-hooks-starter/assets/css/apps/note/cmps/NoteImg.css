@@ -1,0 +1,13 @@
+.note-img {
+    text-align: center;
+}
+
+.note-img img {
+    max-width: 100%;
+    border-radius: 4px;
+}
+
+.note-img h4 {
+    margin-top: 0.5rem;
+    color: #555;
+}

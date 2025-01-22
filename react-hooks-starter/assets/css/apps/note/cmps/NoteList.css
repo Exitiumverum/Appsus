@@ -1,1 +1,14 @@
- /* note list */
+.note-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+}
+
+.no-notes {
+    text-align: center;
+    color: #bdc3c7;
+    font-style: italic;
+}
