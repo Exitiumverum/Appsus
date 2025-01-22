@@ -6,6 +6,7 @@ export function NoteIndex() {
     const [notes, setNotes] = useState([])
     const [noteType, setNoteType] = useState('NoteTxt') // Default to text note
     const [noteContent, setNoteContent] = useState('')
+    const [filterBy, setFilterBy] = useState({ txt: '', type: 'all' }) // Filter state
     const [errorMsg, setErrorMsg] = useState('')
 
     useEffect(() => {
@@ -65,19 +66,38 @@ export function NoteIndex() {
             .catch(() => displayError('Failed to update note'))
     }
 
-    function displayError(message) {
-        setErrorMsg(message)
-        setTimeout(() => setErrorMsg(''), 3000)
-    }
-
     function onTogglePin(noteId) {
         noteService.togglePin(noteId)
             .then(() => loadNotes())
             .catch(() => displayError('Failed to pin/unpin note'))
     }
 
+    function displayError(message) {
+        setErrorMsg(message)
+        setTimeout(() => setErrorMsg(''), 3000)
+    }
+
+    // Filter Notes Based on Search and Type
+    function getFilteredNotes() {
+        const { txt, type } = filterBy
+        return notes.filter(note => {
+            const matchesTxt = 
+                (note.info.txt && note.info.txt.toLowerCase().includes(txt.toLowerCase())) || 
+                (note.info.url && note.info.url.toLowerCase().includes(txt.toLowerCase()))
+            const matchesType = type === 'all' || note.type === type
+            return matchesTxt && matchesType
+        })
+    }
+
+    // Update Filter State
+    function onSetFilter(event) {
+        const { name, value } = event.target
+        setFilterBy(prevFilter => ({ ...prevFilter, [name]: value }))
+    }
+
     return (
         <section className="note-index">
+            {/* Note Addition */}
             <div className="note-add">
                 <select value={noteType} onChange={(e) => setNoteType(e.target.value)}>
                     <option value="NoteTxt">Text Note</option>
@@ -92,12 +112,33 @@ export function NoteIndex() {
                 />
                 <button onClick={onAddNote}>Add Note</button>
             </div>
+
+            {/* Error Message */}
             {errorMsg && <div className="error-msg">{errorMsg}</div>}
+
+            {/* Filter Section */}
+            <div className="note-filter">
+                <input
+                    type="text"
+                    name="txt"
+                    placeholder="Search notes..."
+                    value={filterBy.txt}
+                    onChange={onSetFilter}
+                />
+                <select name="type" value={filterBy.type} onChange={onSetFilter}>
+                    <option value="all">All Notes</option>
+                    <option value="NoteTxt">Text Notes</option>
+                    <option value="NoteImg">Image Notes</option>
+                    <option value="NoteTodos">Todo Notes</option>
+                </select>
+            </div>
+
+            {/* Notes List */}
             <NoteList
-                notes={notes}
+                notes={getFilteredNotes()} // Pass filtered notes to the list
                 onRemoveNote={onRemoveNote}
-                onUpdateNote={onUpdateNote} // Pass this function to handle note updates
-                onTogglePin={onTogglePin} // Pass this function to handle pin toggling
+                onUpdateNote={onUpdateNote}
+                onTogglePin={onTogglePin}
             />
         </section>
     )
