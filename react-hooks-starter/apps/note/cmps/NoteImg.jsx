@@ -1,5 +1,5 @@
 export function NoteImg({ note }) {
-    console.log('note:', note)
+    // console.log('note:', note)
     return (
         <div className="note-img">
             {note.info.url ? (

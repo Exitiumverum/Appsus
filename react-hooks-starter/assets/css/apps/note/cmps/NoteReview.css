@@ -9,6 +9,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.3s ease;
     overflow: hidden;
+    max-width: 400px; /* Limit max width for cleaner layout */
 }
 
 .note-preview:hover {
@@ -22,9 +23,18 @@
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
-    max-height: 100px;
     margin-bottom: 1rem;
     text-align: center;
+}
+
+/* Video Notes */
+.note-content iframe,
+.note-content video {
+    width: 100%;
+    height: 250px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Image Notes */
@@ -84,3 +94,18 @@
     background-color: #1e88e5;
     transform: scale(1.05);
 }
+
+.note-color-picker {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.note-color-picker input {
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+}
+

@@ -33,10 +33,11 @@ function post(entityType, newEntity) {
 // Save multiple entities to localStorage
 function postMany(entityType, newEntities) {
     return query(entityType).then(entities => {
-        entities = [...entities, ...newEntities];
-        _save(entityType, entities);
-        return entities;
-    });
+        if (!entities.length) entities = [] // Initialize if empty
+        entities = [...entities, ...newEntities]
+        _save(entityType, entities)
+        return entities
+    })
 }
 
 function put(entityType, updatedEntity) {

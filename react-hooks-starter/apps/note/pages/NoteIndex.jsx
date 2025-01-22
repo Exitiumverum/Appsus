@@ -59,18 +59,19 @@ export function NoteIndex() {
             .then(() => loadNotes())
             .catch(() => displayError('Failed to remove note'))
     }
-
+    
     function onUpdateNote(updatedNote) {
         noteService.updateNote(updatedNote)
             .then(() => loadNotes())
             .catch(() => displayError('Failed to update note'))
     }
+    
 
     function onTogglePin(noteId) {
         noteService.togglePin(noteId)
             .then(() => loadNotes())
             .catch(() => displayError('Failed to pin/unpin note'))
-    }
+    }    
 
     function displayError(message) {
         setErrorMsg(message)
@@ -80,14 +81,24 @@ export function NoteIndex() {
     // Filter Notes Based on Search and Type
     function getFilteredNotes() {
         const { txt, type } = filterBy
+    
         return notes.filter(note => {
-            const matchesTxt = 
-                (note.info.txt && note.info.txt.toLowerCase().includes(txt.toLowerCase())) || 
-                (note.info.url && note.info.url.toLowerCase().includes(txt.toLowerCase()))
-            const matchesType = type === 'all' || note.type === type
-            return matchesTxt && matchesType
+            // Check if note.info exists and safely access its properties
+            const info = note.info || {}
+    
+            // Safely handle filtering for different note types
+            const matchesTxt = (
+                (info.txt && info.txt.toLowerCase().includes(txt.toLowerCase())) || // Text notes
+                (info.url && info.url.toLowerCase().includes(txt.toLowerCase())) || // Image/Video notes
+                (info.todos && info.todos.some(todo => todo.txt.toLowerCase().includes(txt.toLowerCase()))) // Todo notes
+            )
+    
+            const matchesType = type === 'all' || note.type === type // Type filter
+    
+            return matchesTxt && matchesType // Combine both filters
         })
     }
+    
 
     // Update Filter State
     function onSetFilter(event) {

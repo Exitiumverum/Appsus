@@ -1,0 +1,10 @@
+/* NoteTxt Component */
+.note-txt {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+    padding: 0.5rem;
+}
