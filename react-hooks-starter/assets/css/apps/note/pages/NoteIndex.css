@@ -15,58 +15,91 @@ body {
 }
 
 /* App Container */
-.app {
+.note-index {
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Add Note Section */
 .note-add {
     display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: center;
 }
 
 .note-add select,
 .note-add input {
-    padding: 0.5rem;
+    padding: 0.8rem;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1rem;
-}
-
-.note-add select {
-    flex-grow: 0.3;
-}
-
-.note-add input {
-    flex-grow: 1;
+    flex: 1;
 }
 
 .note-add button {
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    color: white;
+    padding: 0.8rem 1.5rem;
+    background-color: #42a5f5;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .note-add button:hover {
-    background-color: #0056b3;
+    background-color: #1e88e5;
+    transform: scale(1.05);
 }
 
-
-/* Utility Classes */
-.text-center {
-    text-align: center;
-}
-
-.text-bold {
+/* Section Titles */
+.section-title {
+    font-size: 1.4rem;
     font-weight: bold;
+    margin-bottom: 1rem;
+    color: #333;
 }
 
-.hidden {
-    display: none;
+/* Grid for Notes */
+.note-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 1rem;
+}
+
+.note-filter {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+.note-filter input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.note-filter select {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.error-msg {
+    color: #e74c3c;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: bold;
 }
