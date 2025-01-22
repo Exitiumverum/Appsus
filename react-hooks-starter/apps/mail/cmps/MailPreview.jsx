@@ -1,6 +1,6 @@
 
 export function MailPreview({ mail }) {
-    console.log('mail: ', mail)
+    // console.log('mail: ', mail)
 
     const { name, subject, body, sentAt } = mail
     return (

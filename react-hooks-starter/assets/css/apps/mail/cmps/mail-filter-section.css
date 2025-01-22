@@ -2,3 +2,11 @@
     display: flex;
     flex-direction: column;
 }
+
+.mail-filter-section.filter-open{
+    opacity: 100%;
+}
+
+.mail-filter-section.filter-closed{
+    opacity: 0;
+}
