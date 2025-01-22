@@ -1,21 +1,5 @@
-/* Todo Note Container */
-.note-todos {
-    padding: 1rem;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.note-todos h4 {
-    margin-bottom: 0.5rem;
-    font-size: 1.2rem;
-    color: #333;
-    font-weight: bold;
-}
-
-/* Todo List */
 .note-todos ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
     margin: 0;
 }
@@ -24,7 +8,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.3rem 0;
+    padding: 0.4rem 0;
     border-bottom: 1px solid #eee;
     transition: background-color 0.3s;
 }
@@ -33,42 +17,26 @@
     border-bottom: none;
 }
 
-/* Todo Text */
-.note-todos span {
-    flex-grow: 1;
-    font-size: 1rem;
-    color: #555;
-    transition: color 0.3s;
-}
-
 .note-todos li.completed span {
     text-decoration: line-through;
     color: #aaa;
 }
 
-/* Checkbox */
 .note-todos input[type="checkbox"] {
     width: 1rem;
     height: 1rem;
-    cursor: pointer;
 }
 
-/* Delete Button */
 .note-todos button {
     background: none;
     border: none;
     color: #e74c3c;
-    font-size: 0.75rem;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: transform 0.2s, color 0.3s;
 }
 
 .note-todos button:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
     color: #c0392b;
-}
-
-/* Hover Effect for List Items */
-.note-todos li:hover {
-    background-color: #f1f1f1;
 }
