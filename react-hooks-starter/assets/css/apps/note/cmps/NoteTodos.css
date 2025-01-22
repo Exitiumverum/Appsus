@@ -1,0 +1,18 @@
+.note-todos ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.note-todos li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.note-todos input {
+    margin-right: 0.5rem;
+}
+
+.note-todos span {
+    color: #333;
+}
