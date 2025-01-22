@@ -4,6 +4,7 @@ export const storageService = {
     post,
     put,
     remove,
+    postMany,
 }
 
 function query(entityType, delay = 500) {
@@ -27,6 +28,15 @@ function post(entityType, newEntity) {
         _save(entityType, entities)
         return newEntity
     })
+}
+
+// Save multiple entities to localStorage
+function postMany(entityType, newEntities) {
+    return query(entityType).then(entities => {
+        entities = [...entities, ...newEntities];
+        _save(entityType, entities);
+        return entities;
+    });
 }
 
 function put(entityType, updatedEntity) {
