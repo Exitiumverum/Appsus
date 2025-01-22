@@ -6,26 +6,34 @@ export function NoteIndex() {
     const [notes, setNotes] = useState([])
     const [noteType, setNoteType] = useState('NoteTxt') // Default to text note
     const [noteContent, setNoteContent] = useState('')
+    const [errorMsg, setErrorMsg] = useState('')
 
     useEffect(() => {
         loadNotes()
     }, [])
 
     function loadNotes() {
-        noteService.query().then(setNotes)
+        noteService.query()
+            .then(setNotes)
+            .catch(() => displayError('Failed to load notes'))
     }
 
     function onAddNote() {
-        if (!noteContent.trim()) return
+        if (!noteContent.trim()) {
+            displayError('Note content cannot be empty')
+            return
+        }
 
         const newNote = noteService.getEmptyNote()
         newNote.type = noteType
         newNote.info = getNoteInfo(noteType, noteContent)
 
-        noteService.save(newNote).then(() => {
-            setNoteContent('')
-            loadNotes()
-        })
+        noteService.save(newNote)
+            .then(() => {
+                setNoteContent('')
+                loadNotes()
+            })
+            .catch(() => displayError('Failed to add note'))
     }
 
     function getNoteInfo(type, content) {
@@ -35,7 +43,10 @@ export function NoteIndex() {
             case 'NoteImg':
                 return { url: content, title: 'Image Note' }
             case 'NoteTodos':
-                const todos = content.split(',').map(todo => ({ txt: todo.trim(), done: false }))
+                const todos = content.split(',').map(todo => ({
+                    txt: todo.trim(),
+                    done: false,
+                }))
                 return { todos }
             default:
                 return { txt: content }
@@ -43,7 +54,26 @@ export function NoteIndex() {
     }
 
     function onRemoveNote(noteId) {
-        noteService.remove(noteId).then(() => loadNotes())
+        noteService.remove(noteId)
+            .then(() => loadNotes())
+            .catch(() => displayError('Failed to remove note'))
+    }
+
+    function onUpdateNote(updatedNote) {
+        noteService.updateNote(updatedNote)
+            .then(() => loadNotes())
+            .catch(() => displayError('Failed to update note'))
+    }
+
+    function displayError(message) {
+        setErrorMsg(message)
+        setTimeout(() => setErrorMsg(''), 3000)
+    }
+
+    function onTogglePin(noteId) {
+        noteService.togglePin(noteId)
+            .then(() => loadNotes())
+            .catch(() => displayError('Failed to pin/unpin note'))
     }
 
     return (
@@ -62,7 +92,13 @@ export function NoteIndex() {
                 />
                 <button onClick={onAddNote}>Add Note</button>
             </div>
-            <NoteList notes={notes} onRemoveNote={onRemoveNote} />
+            {errorMsg && <div className="error-msg">{errorMsg}</div>}
+            <NoteList
+                notes={notes}
+                onRemoveNote={onRemoveNote}
+                onUpdateNote={onUpdateNote} // Pass this function to handle note updates
+                onTogglePin={onTogglePin} // Pass this function to handle pin toggling
+            />
         </section>
     )
 }
