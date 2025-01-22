@@ -10,7 +10,7 @@ const { useState, useEffect } = React
 export function MailIndex() {
 
     const [mails, setMails] = useState(null)
-    const []
+
 
     useEffect(() => {
         loadMails()
