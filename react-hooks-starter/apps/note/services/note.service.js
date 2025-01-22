@@ -39,9 +39,10 @@ function remove(noteId) {
 function getEmptyNote() {
     return {
         id: '',
-        type: 'NoteTxt',
+        type: 'NoteTxt', // Default type
         isPinned: false,
         style: { backgroundColor: '#fff' },
-        info: { txt: '' },
-    };
+        info: {} // Will vary based on type
+    }
 }
+
