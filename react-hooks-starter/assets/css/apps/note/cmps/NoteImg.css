@@ -1,21 +1,14 @@
 .note-img {
     text-align: center;
-    padding: 1rem;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .note-img img {
     max-width: 100%;
-    height: auto;
     border-radius: 4px;
-    display: block;
-    margin: 0 auto;
+    margin-bottom: 0.5rem;
 }
 
 .note-img h4 {
     font-size: 1rem;
     color: #555;
-    margin-top: 0.5rem;
 }
