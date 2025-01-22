@@ -1,1 +1,77 @@
- /* note index */
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* App Container */
+.app {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Header Styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+header h3 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #34495e;
+    margin-right: 1rem;
+    transition: color 0.2s;
+}
+
+header nav a:hover {
+    color: #2c3e50;
+}
+
+header nav a.active {
+    font-weight: bold;
+    color: #2980b9;
+}
+
+/* Footer Styling */
+footer {
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    background-color: #ffffff;
+    border-top: 1px solid #ddd;
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
