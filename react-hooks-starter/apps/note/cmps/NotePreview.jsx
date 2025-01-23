@@ -2,18 +2,17 @@ import { NoteImg } from './NoteImg.jsx';
 import { NoteTodos } from './NoteTodos.jsx';
 import { NoteTxt } from './NoteText.jsx';
 import { NoteVideo } from './NoteVideo.jsx';
-const { useNavigate } = ReactRouterDOM;
 const { useState } = React;
+const { useNavigate } = ReactRouterDOM;
 
 export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
     const [isEditing, setIsEditing] = useState(false); // Track editing state
-    const [editedContent, setEditedContent] = useState({ ...note.info }); // Clone content to avoid direct mutation
-    const [debugUrl, setDebugUrl] = useState(''); // State to display the generated URL for debugging
-    const navigate = useNavigate(); // Initialize React Router navigation
+    const [editedContent, setEditedContent] = useState({ ...note.info }); // Clone the content to avoid direct mutation
+    const navigate = useNavigate(); // React Router navigation
 
     function handleSave() {
         const updatedNote = { ...note, info: editedContent };
-        onUpdateNote(updatedNote); // Update the note
+        onUpdateNote(updatedNote); // Call the update function
         setIsEditing(false); // Exit editing mode
     }
 
@@ -27,11 +26,11 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
             console.error('Error: Note is undefined or missing info');
             return;
         }
-
-        const baseUrl = '/misterEmail/compose'; // Destination URL for email compose
+    
+        const baseUrl = '/mail'; // Use `/mail` for the route
         const subject = encodeURIComponent(note.info.title || 'New Note');
         let body;
-
+    
         // Prepare email content based on the note type
         switch (note.type) {
             case 'NoteTxt':
@@ -51,24 +50,15 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
             default:
                 body = encodeURIComponent('Unsupported note type.');
         }
-
+    
         // Construct the final URL with query parameters
         const queryParams = `?subject=${subject}&body=${body}`;
-        const finalUrl = `${baseUrl}${queryParams}`;
-
-        // Debugging logs for inspection
-        console.log('Note:', note);
-        console.log('Subject:', subject);
-        console.log('Body:', body);
-        console.log('Generated URL:', finalUrl);
-
-        // Update debugUrl state to render it in the UI
-        setDebugUrl(finalUrl);
-
-        // Navigate to the compose page with the constructed URL
-        navigate(finalUrl);
+        const finalUrl = `${baseUrl}${queryParams}`; // No `#` prefix, HashRouter will handle it
+    
+        console.log('Navigating to:', finalUrl); // Debugging log
+        navigate(finalUrl); // Navigate to `/mail` route with query parameters
     }
-
+    
     function renderEditingContent() {
         switch (note.type) {
             case 'NoteTxt':
@@ -76,9 +66,7 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
                     <textarea
                         className="edit-textarea"
                         value={editedContent.txt}
-                        onChange={(e) =>
-                            setEditedContent({ ...editedContent, txt: e.target.value })
-                        }
+                        onChange={(e) => setEditedContent({ ...editedContent, txt: e.target.value })}
                     />
                 );
             case 'NoteImg':
@@ -88,9 +76,7 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
                         type="text"
                         value={editedContent.url}
                         placeholder="Enter image URL"
-                        onChange={(e) =>
-                            setEditedContent({ ...editedContent, url: e.target.value })
-                        }
+                        onChange={(e) => setEditedContent({ ...editedContent, url: e.target.value })}
                     />
                 );
             case 'NoteTodos':
@@ -99,9 +85,7 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
                         className="edit-textarea"
                         value={editedContent.todos.map(todo => todo.txt).join(', ')}
                         onChange={(e) => {
-                            const todos = e.target.value
-                                .split(',')
-                                .map(txt => ({ txt: txt.trim(), done: false }));
+                            const todos = e.target.value.split(',').map(txt => ({ txt: txt.trim(), done: false }));
                             setEditedContent({ ...editedContent, todos });
                         }}
                     />
@@ -117,12 +101,8 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
                 <div className="note-edit">
                     {renderEditingContent()}
                     <div className="note-edit-actions">
-                        <button onClick={handleSave} className="btn-save">
-                            Save
-                        </button>
-                        <button onClick={() => setIsEditing(false)} className="btn-cancel">
-                            Cancel
-                        </button>
+                        <button onClick={handleSave} className="btn-save">Save</button>
+                        <button onClick={() => setIsEditing(false)} className="btn-cancel">Cancel</button>
                     </div>
                 </div>
             );
@@ -136,7 +116,7 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
                 return <NoteImg note={note} />;
             case 'NoteTodos':
                 return <NoteTodos note={note} onUpdateNote={onUpdateNote} />;
-            case 'NoteVideo':
+            case 'NoteVideo': // Add support for video notes
                 return <NoteVideo note={note} />;
             default:
                 return <p>Unsupported note type</p>;
@@ -165,15 +145,6 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
                     ✉️ Email
                 </button>
             </div>
-
-            {/* Debugging: Display the generated URL */}
-            {debugUrl && (
-                <div className="debug-url">
-                    <p><strong>Generated URL:</strong></p>
-                    <code>{debugUrl}</code>
-                </div>
-            )}
-
             <div className="note-color-picker">
                 <label htmlFor={`color-${note.id}`}>🎨 Color:</label>
                 <input

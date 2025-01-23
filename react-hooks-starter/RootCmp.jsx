@@ -29,7 +29,7 @@ export function App() {
                     <Route path="/mail" element={<MailIndex />}>
                         <Route path="inbox" element={<MailInbox />} />
                         <Route path="sent" element={<MailSent />} />
-                        <Route path="/mail/compose" element={<MailCompose />} />
+                        <Route path="/mail" element={<MailCompose />} />
                         {/* Redirect to inbox as the default child route */}
                         <Route index element={<Navigate to="inbox" />} />
                     </Route>
