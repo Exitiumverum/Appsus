@@ -61,11 +61,10 @@ export function NoteIndex() {
     }
     
     function onUpdateNote(updatedNote) {
-        noteService.updateNote(updatedNote)
-            .then(() => loadNotes())
-            .catch(() => displayError('Failed to update note'))
+        noteService.save(updatedNote)
+            .then(() => loadNotes()) // Reload notes to reflect changes
+            .catch(() => displayError('Failed to update note'));
     }
-    
 
     function onTogglePin(noteId) {
         noteService.togglePin(noteId)
@@ -146,7 +145,7 @@ export function NoteIndex() {
 
             {/* Notes List */}
             <NoteList
-                notes={getFilteredNotes()} // Pass filtered notes to the list
+                notes={notes} // Pass filtered notes to the list
                 onRemoveNote={onRemoveNote}
                 onUpdateNote={onUpdateNote}
                 onTogglePin={onTogglePin}

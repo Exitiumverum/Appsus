@@ -42,13 +42,16 @@ function remove(noteId) {
 // Update a specific note
 function updateNote(updatedNote) {
     return query().then(notes => {
-        const idx = notes.findIndex(note => note.id === updatedNote.id)
-        if (idx === -1) throw new Error('Note not found')
-
-        notes[idx] = updatedNote
-        return storageService.save(NOTE_KEY, notes).then(() => updatedNote)
-    })
+        const idx = notes.findIndex(note => note.id === updatedNote.id);
+        if (idx === -1) throw new Error(`Note with ID ${updatedNote.id} not found`);
+        
+        const updatedNotes = [...notes];
+        updatedNotes[idx] = { ...updatedNotes[idx], ...updatedNote }; // Merge changes
+        
+        return storageService.save(NOTE_KEY, updatedNotes).then(() => updatedNote);
+    });
 }
+
 
 function togglePin(noteId) {
     return query().then(notes => {

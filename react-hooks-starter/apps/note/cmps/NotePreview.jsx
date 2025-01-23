@@ -11,11 +11,11 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
 
     // Save changes after editing
     function handleSave() {
-        const updatedNote = { ...note, info: editedContent }
-        onUpdateNote(updatedNote)
-        setIsEditing(false)
-    }
-
+        const updatedNote = { ...note, info: { ...editedContent } }; // Merge edits
+        console.log('Saving note:', updatedNote);
+        onUpdateNote(updatedNote);
+        setIsEditing(false);
+    }       
 
     // Change note background color
     function handleColorChange(color) {
@@ -37,10 +37,10 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
             case 'NoteVideo':
                 return (
                     <input
-                        type="text"
                         value={editedContent.url}
-                        placeholder={`Enter ${note.type === 'NoteImg' ? 'image' : 'video'} URL`}
-                        onChange={(e) => setEditedContent({ ...editedContent, url: e.target.value })}
+                        onChange={(e) => {
+                            setEditedContent({ ...editedContent, url: e.target.value })
+                        }}
                     />
                 )
             case 'NoteTodos':
@@ -75,7 +75,7 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
     }
 
     return (
-        <article className="note-preview" style={{ backgroundColor: note.style.backgroundColor || '#ffffff' }}>
+        <article className="note-preview" style={{ backgroundColor: '#ffffff' }}>
             <div className="note-content">
                 {isEditing ? renderEditingContent() : renderNoteContent()}
             </div>
