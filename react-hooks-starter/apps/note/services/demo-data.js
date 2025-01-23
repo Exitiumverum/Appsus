@@ -4,7 +4,7 @@ export const demoNotes = [
         id: 'n101',
         type: 'NoteTxt',
         isPinned: true,
-        style: { backgroundColor: '#ffffff' },
+        style: { backgroundColor: '#fff' },
         info: { txt: 'Welcome to MissKeep!' },
     },
     {
@@ -21,4 +21,4 @@ export const demoNotes = [
         style: { backgroundColor: '#ccff90' },
         info: { txt: 'You can pin or delete notes.' },
     },
-]
+];

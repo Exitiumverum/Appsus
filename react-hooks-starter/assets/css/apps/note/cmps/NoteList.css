@@ -1,28 +1,29 @@
-/* NoteList Container */
+/* NoteList.css */
 .note-list {
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    flex-direction: column; /* Organize notes in rows */
+    gap: 15px; /* Smaller spacing between rows */
+    padding: 10px;
 }
 
-/* Section Titles */
-.section-title {
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: #333;
-    text-align: left;
-}
-
-/* Pinned and Other Notes Sections */
 .note-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
-    gap: 1rem;
+    display: flex;
+    flex-wrap: nowrap; /* Keep notes in a single row */
+    gap: 10px; /* Smaller spacing between notes in a row */
+    overflow-x: auto; /* Enable horizontal scrolling for rows */
+    padding-bottom: 5px;
+    scroll-snap-type: x mandatory; /* Smooth scrolling for rows */
 }
 
-.note-section.pinned {
-    border-bottom: 2px dashed #ddd;
-    padding-bottom: 1rem;
-    margin-bottom: 2rem;
+.note-section::-webkit-scrollbar {
+    height: 6px; /* Slimmer horizontal scrollbar */
+}
+
+.note-section::-webkit-scrollbar-thumb {
+    background-color: #bbb; /* Custom scrollbar color */
+    border-radius: 10px;
+}
+
+.note-section::-webkit-scrollbar-track {
+    background-color: transparent;
 }

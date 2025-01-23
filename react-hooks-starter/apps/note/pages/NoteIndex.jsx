@@ -1,100 +1,130 @@
-const { useState, useEffect } = React
+const { useEffect, useState } = React
 import { noteService } from '../services/note.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
 
-console.log('NoteList is:', NoteList)
-
 export function NoteIndex() {
     const [notes, setNotes] = useState([])
-    const [filterBy, setFilterBy] = useState({ txt: '', type: 'all' })
+    const [noteType, setNoteType] = useState('NoteTxt') // Default to text note
     const [noteContent, setNoteContent] = useState('')
-    const [noteType, setNoteType] = useState('NoteTxt')
+    const [filterBy, setFilterBy] = useState({ txt: '', type: 'all' }) // Filter state
+    const [errorMsg, setErrorMsg] = useState('')
 
     useEffect(() => {
         loadNotes()
     }, [])
 
-    const loadNotes = () => {
-        noteService.query().then(setNotes)
+    function loadNotes() {
+        noteService.query()
+            .then(setNotes)
+            .catch(() => displayError('Failed to load notes'))
     }
 
-    const onAddNote = () => {
+    function onAddNote() {
+        if (!noteContent.trim()) {
+            displayError('Note content cannot be empty')
+            return
+        }
+
         const newNote = noteService.getEmptyNote()
         newNote.type = noteType
         newNote.info = getNoteInfo(noteType, noteContent)
-        noteService.save(newNote).then(() => {
-            setNoteContent('')
-            loadNotes()
-        })
+
+        noteService.save(newNote)
+            .then(() => {
+                setNoteContent('')
+                loadNotes()
+            })
+            .catch(() => displayError('Failed to add note'))
     }
+
+    function getNoteInfo(type, content) {
+        switch (type) {
+            case 'NoteTxt':
+                return { txt: content }
+            case 'NoteImg':
+                return { url: content, title: 'Image Note' }
+            case 'NoteTodos':
+                return {
+                    todos: content.split(',').map(todo => ({
+                        txt: todo.trim(),
+                        done: false,
+                    }))
+                }
+            case 'NoteVideo':
+                return { url: content, title: 'Video Note' } // Handle video notes
+            default:
+                return { txt: content }
+        }
+    }
+
 
     function onRemoveNote(noteId) {
-        setNotes(prevNotes => prevNotes.filter(note => note.id !== noteId))
+        noteService.remove(noteId)
+            .then(() => loadNotes())
+            .catch(() => displayError('Failed to remove note'))
     }
 
-    function onEditNote(updatedNote) {
-        setNotes(prevNotes => prevNotes.map(note => note.id === updatedNote.id ? updatedNote : note))
+    function onUpdateNote(updatedNote) {
+        noteService.updateNote(updatedNote)
+            .then(() => loadNotes())
+            .catch(() => displayError('Failed to update note'))
     }
 
-    
     function onTogglePin(noteId) {
-        setNotes(prevNotes =>
-            prevNotes.map(note =>
-                note.id === noteId ? { ...note, isPinned: !note.isPinned } : note
-            )
-        )
+        noteService.togglePin(noteId)
+            .then(() => loadNotes())
+            .catch(() => displayError('Failed to pin/unpin note'))
     }
 
-    const getNoteInfo = (type, content) => {
-        if (type === 'NoteTxt') return { txt: content }
-        if (type === 'NoteImg') return { url: content, title: '' }
-        if (type === 'NoteTodos') {
-            const todos = content.split(',').map(txt => ({ txt: txt.trim(), done: false }))
-            return { todos }
-        }
-        if (type === 'NoteVideo') return { url: content, title: '' }
-        return {}
+    function displayError(message) {
+        setErrorMsg(message)
+        setTimeout(() => setErrorMsg(''), 3000)
     }
 
-    const onSetFilter = ({ target }) => {
-        const { name, value } = target
-        setFilterBy(prevFilter => ({ ...prevFilter, [name]: value }))
-    }
-
-    const getFilteredNotes = () => {
+    // Filter Notes Based on Search and Type
+    function getFilteredNotes() {
+        const { txt, type } = filterBy
         return notes.filter(note => {
-            let matchesTxt = false
-            if (note.info) {
-                if (note.info.txt && note.info.txt.toLowerCase().includes(filterBy.txt.toLowerCase())) {
-                    matchesTxt = true
-                }
-                if (note.info.url && note.info.url.toLowerCase().includes(filterBy.txt.toLowerCase())) {
-                    matchesTxt = true
-                }
-            }
-            const matchesType = filterBy.type === 'all' || note.type === filterBy.type
+            const matchesTxt =
+                (note.info.txt && note.info.txt.toLowerCase().includes(txt.toLowerCase())) ||
+                (note.info.todos && note.info.todos.some(todo => todo.txt.toLowerCase().includes(txt.toLowerCase()))) ||
+                (note.info.url && note.info.url.toLowerCase().includes(txt.toLowerCase()))
+            const matchesType = type === 'all' || note.type === type
             return matchesTxt && matchesType
         })
     }
 
+
+    // Update Filter State
+    function onSetFilter(event) {
+        const { name, value } = event.target
+        setFilterBy(prevFilter => ({ ...prevFilter, [name]: value }))
+    }
+
     return (
-        <section>
-            <div>
+        <section className="note-index">
+            {/* Note Addition */}
+            <div className="note-add">
                 <select value={noteType} onChange={(e) => setNoteType(e.target.value)}>
                     <option value="NoteTxt">Text Note</option>
                     <option value="NoteImg">Image Note</option>
-                    <option value="NoteTodos">Todos Note</option>
-                    <option value="NoteVideo">Video Note</option>
+                    <option value="NoteTodos">Todo Note</option>
+                    <option value="NoteVideo">Video Note</option> {/* Add video note option */}
                 </select>
                 <input
                     type="text"
-                    placeholder="Enter note content..."
+                    placeholder={getPlaceholder(noteType)}
                     value={noteContent}
                     onChange={(e) => setNoteContent(e.target.value)}
                 />
                 <button onClick={onAddNote}>Add Note</button>
             </div>
-            <div>
+
+            {/* Error Message */}
+            {errorMsg && <div className="error-msg">{errorMsg}</div>}
+
+            {/* Filter Section */}
+            <div className="note-filter">
                 <input
                     type="text"
                     name="txt"
@@ -104,19 +134,35 @@ export function NoteIndex() {
                 />
                 <select name="type" value={filterBy.type} onChange={onSetFilter}>
                     <option value="all">All Notes</option>
-                    <option value="NoteTxt">Text</option>
-                    <option value="NoteImg">Images</option>
-                    <option value="NoteTodos">Todos</option>
-                    <option value="NoteVideo">Videos</option>
+                    <option value="NoteTxt">Text Notes</option>
+                    <option value="NoteImg">Image Notes</option>
+                    <option value="NoteTodos">Todo Notes</option>
+                    <option value="NoteVideo">Video Notes</option> {/* Add video note option */}
                 </select>
             </div>
+
+            {/* Notes List */}
             <NoteList
                 notes={getFilteredNotes()} // Pass filtered notes to the list
                 onRemoveNote={onRemoveNote}
-                onEditNote={onEditNote}
+                onUpdateNote={onUpdateNote}
                 onTogglePin={onTogglePin}
-
             />
         </section>
     )
+}
+
+function getPlaceholder(noteType) {
+    switch (noteType) {
+        case 'NoteTxt':
+            return 'Enter your text...'
+        case 'NoteImg':
+            return 'Enter image URL...'
+        case 'NoteTodos':
+            return 'Enter comma-separated todos...'
+        case 'NoteVideo':
+            return 'Enter video URL...' // Add video note placeholder
+        default:
+            return 'Enter your note...'
+    }
 }

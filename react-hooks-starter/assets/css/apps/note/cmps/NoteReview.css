@@ -1,111 +1,31 @@
-/* Individual Note Container */
+/* NotePreview.css */
 .note-preview {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 1rem;
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-    max-width: 400px; /* Limit max width for cleaner layout */
+    flex: 0 0 200px; /* Smaller note width */
+    background: #fff;
+    border-radius: 6px; /* Slightly smaller corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px; /* Compact padding */
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .note-preview:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Note Content */
 .note-content {
-    flex-grow: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-    margin-bottom: 1rem;
-    text-align: center;
+    font-size: 0.85rem; /* Smaller text */
+    margin-bottom: 10px;
 }
 
-/* Video Notes */
-.note-content iframe,
-.note-content video {
-    width: 100%;
-    height: 250px;
-    border-radius: 8px;
-    object-fit: cover;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Image Notes */
-.note-content img {
-    max-width: 100%;
-    max-height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-/* Note Actions */
 .note-actions {
     display: flex;
     justify-content: space-between;
-    margin-top: 1rem;
+    align-items: center;
+    margin-top: 8px;
 }
 
 .note-actions button {
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    border: none;
-    font-size: 0.8rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 0.8rem; /* Smaller action buttons */
+    padding: 5px 8px; /* Compact buttons */
 }
-
-/* Pin Button */
-.btn-pin {
-    background-color: #ffca28;
-    color: #333;
-}
-
-.btn-pin:hover {
-    background-color: #ffa000;
-    transform: scale(1.05);
-}
-
-/* Remove Button */
-.btn-remove {
-    background-color: #e57373;
-    color: white;
-}
-
-.btn-remove:hover {
-    background-color: #d32f2f;
-    transform: scale(1.05);
-}
-
-/* Edit Button */
-.btn-edit {
-    background-color: #42a5f5;
-    color: white;
-}
-
-.btn-edit:hover {
-    background-color: #1e88e5;
-    transform: scale(1.05);
-}
-
-.note-color-picker {
-    margin-top: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.note-color-picker input {
-    width: 30px;
-    height: 30px;
-    border: none;
-    cursor: pointer;
-}
-

@@ -1,14 +1,17 @@
+/* NoteImg.css */
 .note-img {
     text-align: center;
+    border-radius: 6px;
 }
 
 .note-img img {
     max-width: 100%;
-    border-radius: 4px;
-    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 8px;
 }
 
 .note-img h4 {
-    font-size: 1rem;
+    font-size: 0.85rem; /* Smaller text for titles */
     color: #555;
 }

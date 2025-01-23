@@ -32,12 +32,12 @@ function post(entityType, newEntity) {
 
 // Save multiple entities to localStorage
 function postMany(entityType, newEntities) {
+    console.log('postMany', entityType, newEntities)
     return query(entityType).then(entities => {
-        if (!entities.length) entities = [] // Initialize if empty
-        entities = [...entities, ...newEntities]
-        _save(entityType, entities)
-        return entities
-    })
+        entities = [...entities, ...newEntities];
+        _save(entityType, entities);
+        return entities;
+    });
 }
 
 function put(entityType, updatedEntity) {
