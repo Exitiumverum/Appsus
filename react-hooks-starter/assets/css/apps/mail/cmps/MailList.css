@@ -6,8 +6,13 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     width: 100%;
+    padding-left: 1em;
+    flex-grow: 1;
+    transition: transform 0.3s ease;
  }
 
- .mail-list.filter-open{
-   margin-left: 7.6em;
+ .mail-list.filter-closed{
+   /* margin-left: 7.6em; */
+   transform: translateX(-10em);
+   width: calc(100vw + 10em);
  }
