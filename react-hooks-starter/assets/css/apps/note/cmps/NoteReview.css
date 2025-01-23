@@ -29,3 +29,17 @@
     font-size: 0.8rem; /* Smaller action buttons */
     padding: 5px 8px; /* Compact buttons */
 }
+
+.btn-email {
+    background-color: #f1c40f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-email:hover {
+    background-color: #d4ac0d;
+}
