@@ -2,6 +2,20 @@
 export function MailPreview({ mail }) {
     // console.log('mail: ', mail)
 
+    const formatDate = (timestamp) => {
+        const date = new Date(timestamp)
+        const today = new Date()
+        
+        if (date.getDate() === today.getDate() && 
+            date.getMonth() === today.getMonth() && 
+            date.getFullYear() === today.getFullYear()) {
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) 
+        } else {
+            return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}` 
+        }
+    }
+
+
     const { name, subject, body, sentAt } = mail
     return (
         <React.Fragment>
@@ -14,7 +28,7 @@ export function MailPreview({ mail }) {
             </div>
             <p>{subject}</p>
             <p>{body}</p>
-            <p className="mail-date">{sentAt}</p>
+            <p className="mail-date">{formatDate(sentAt)}</p>
         </React.Fragment>
     )
 }

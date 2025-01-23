@@ -5,23 +5,35 @@ import { MailFilter } from '../cmps/MailFilter.jsx'
 import { storageService } from '../../../services/async-storage.service.js'
 import { MailSideBar } from '../cmps/MailSideBar.jsx'
 import { MailCompose } from '../cmps/MailCompose.jsx'
+import { MailInbox } from '../cmps/Inbox.jsx'
+import { MailSent } from '../cmps/Sent.jsx'
+
+const { Route, Routes, Navigate, useLocation } = ReactRouterDOM
+const Router = ReactRouterDOM.HashRouter
+
+
 
 const { useState, useEffect } = React
 
 export function MailIndex() {
+    const LOCATION = useLocation().pathname
+
 
     const [mails, setMails] = useState(null)
     const [isComposeOpen, setCompose] = useState(false)
     const [isFilterOpen, setIsFilterOpen] = useState(true)
+    const [filterCriteria, setFilterCriteria] = useState('')
 
     useEffect(() => {
+        // console.log('running useEffect');
+        
         document.body.classList.add('no-overflow') // Add class when component mounts
         loadMails()
 
         return () => {
             document.body.classList.remove('no-overflow') // Remove class when component unmounts
         }
-    }, [])
+    }, [LOCATION, isFilterOpen])
 
     function loadMails() {
         // console.log(mails)
@@ -33,26 +45,37 @@ export function MailIndex() {
             })
     }
 
-    function onOpenFilter(){
+    function onOpenFilter() {
         console.log('pressed')
-        setIsFilterOpen(prevState => !prevState)
+        // setIsFilterOpen(prevState => !prevState)
+        console.log(isFilterOpen);
     }
 
-    function onOpenCompose(){
-        setCompose (prevState => !prevState)
+    function onOpenCompose() {
+        setCompose(prevState => !prevState)
     }
+
+    
 
     if (!mails) return <div>Loading...</div>
     return (
         <section className="mail-index">
-            <MailSideBar onOpenFilter={onOpenFilter} />
+            <MailSideBar isFilterOpen={isFilterOpen} onOpenFilter={() => onOpenFilter} />
             <div className='mail-header-body'>
                 <MailHeader />
                 <div className="mail-body">
                     <MailFilter isFilterOpen={isFilterOpen} isComposeOpen={isComposeOpen} onOpenCompose={onOpenCompose} />
                     <React.Fragment>
-
-                        <MailList mails={mails} isFilterOpen={isFilterOpen} />
+                        {(() => {
+                            switch(LOCATION) {
+                                case '/mail/inbox':
+                                    return <MailInbox mails={mails} isFilterOpen={isFilterOpen}/>
+                                case '/mail/sent':
+                                    return <MailSent mails={mails} isFilterOpen={isFilterOpen}/>
+                                default:
+                                    return <MailInbox mails={mails} isFilterOpen={isFilterOpen} />
+                            }
+                        })()}
                         {isComposeOpen && <MailCompose />}
                     </React.Fragment>
                 </div>
