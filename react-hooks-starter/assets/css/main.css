@@ -32,6 +32,9 @@
 @import './apps/mail/cmps/mail-body.css';
 /* @import './apps/mail/cmps/MailList.css'; */
 
+/* compose components */
+@import './apps/mail/cmps/MailCompose.css';
+@import './apps/mail/cmps/compose-send-btn.css';
 /* Note CSS */
 
 @import './apps/note/pages/NoteIndex.css';
