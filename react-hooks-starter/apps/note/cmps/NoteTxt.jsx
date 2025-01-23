@@ -1,7 +1,3 @@
 export function NoteTxt({ note }) {
-    return (
-        <div className="note-txt">
-            <p>{note.info.txt}</p>
-        </div>
-    )
+    return <p>{note.info.txt}</p>
 }

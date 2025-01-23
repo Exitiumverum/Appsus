@@ -19,6 +19,9 @@ function query() {
             return storageService.postMany(NOTE_KEY, demoNotes).then(() => demoNotes) // Use demo notes
         }
         return notes
+    }).catch(err => {
+        console.error('Failed to fetch notes:', err)
+        throw new Error('Failed to load notes')
     })
 }
 
@@ -27,7 +30,10 @@ function save(note) {
     if (note.id) {
         return updateNote(note)
     } else {
-        return storageService.post(NOTE_KEY, note)
+        return storageService.post(NOTE_KEY, note).then(() => note).catch(err => {
+            console.error('Failed to save note:', err)
+            throw new Error('Failed to save note')
+        })
     }
 }
 
@@ -35,66 +41,69 @@ function save(note) {
 function remove(noteId) {
     return query().then(notes => {
         const updatedNotes = notes.filter(note => note.id !== noteId) // Remove note by id
-        return storageService.save(NOTE_KEY, updatedNotes) // Save updated notes
+        return storageService.save(NOTE_KEY, updatedNotes).then(() => noteId)
+    }).catch(err => {
+        console.error(`Failed to remove note with ID ${noteId}:`, err)
+        throw new Error('Failed to remove note')
     })
 }
 
 // Update a specific note
 function updateNote(updatedNote) {
     return query().then(notes => {
-        const idx = notes.findIndex(note => note.id === updatedNote.id);
-        if (idx === -1) throw new Error(`Note with ID ${updatedNote.id} not found`);
+        const idx = notes.findIndex(note => note.id === updatedNote.id)
+        if (idx === -1) throw new Error(`Note with ID ${updatedNote.id} not found`)
         
-        const updatedNotes = [...notes];
-        updatedNotes[idx] = { ...updatedNotes[idx], ...updatedNote }; // Merge changes
-        
-        return storageService.save(NOTE_KEY, updatedNotes).then(() => updatedNote);
-    });
-}
+        const updatedNotes = [...notes]
+        updatedNotes[idx] = { ...updatedNotes[idx], ...updatedNote } // Merge changes
 
-
-function togglePin(noteId) {
-    return query().then(notes => {
-        const note = notes.find(note => note.id === noteId)
-        if (!note) throw new Error('Note not found')
-
-        note.isPinned = !note.isPinned
-        return storageService.save(NOTE_KEY, notes).then(() => note)
+        return storageService.save(NOTE_KEY, updatedNotes).then(() => updatedNote)
+    }).catch(err => {
+        console.error('Failed to update note:', err)
+        throw new Error('Failed to update note')
     })
 }
 
+// Toggle the pinned state of a note
+function togglePin(noteId) {
+    return query().then(notes => {
+        const note = notes.find(note => note.id === noteId)
+        if (!note) throw new Error(`Note with ID ${noteId} not found`)
+
+        note.isPinned = !note.isPinned
+        return storageService.save(NOTE_KEY, notes).then(() => note)
+    }).catch(err => {
+        console.error(`Failed to toggle pin for note with ID ${noteId}:`, err)
+        throw new Error('Failed to toggle pin')
+    })
+}
 
 // Create an empty note template
 function getEmptyNote(type = 'NoteTxt') {
     const emptyNote = {
-        id: generateId(), // Add a unique ID generator
-        type, // Dynamic type
+        id: generateId(), // Generate a unique ID
+        type, // Note type (e.g., NoteTxt, NoteImg)
         isPinned: false,
-        style: { backgroundColor: '#ffffff' },
-        info: {},
+        style: { backgroundColor: '#ffffff' }, // Default background color
+        info: getDefaultInfo(type), // Get default info based on type
     }
+    return emptyNote
+}
 
-    // Set default content based on type
+// Generate default info based on note type
+function getDefaultInfo(type) {
     switch (type) {
         case 'NoteTxt':
-            emptyNote.info.txt = ''
-            break
+            return { txt: '' }
         case 'NoteImg':
-            emptyNote.info.url = ''
-            emptyNote.info.title = 'New Image'
-            break
+            return { url: '', title: 'New Image' }
         case 'NoteTodos':
-            emptyNote.info.todos = []
-            break
+            return { todos: [] }
         case 'NoteVideo':
-            emptyNote.info.url = ''
-            emptyNote.info.title = 'New Video'
-            break
+            return { url: '', title: 'New Video' }
         default:
-            break
+            return {}
     }
-
-    return emptyNote
 }
 
 // Generate a unique ID for new notes

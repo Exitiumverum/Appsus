@@ -1,133 +1,100 @@
-const { useEffect, useState } = React
+const { useState, useEffect } = React
 import { noteService } from '../services/note.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
 
+console.log('NoteList is:', NoteList)
+
 export function NoteIndex() {
     const [notes, setNotes] = useState([])
-    const [noteType, setNoteType] = useState('NoteTxt') // Default to text note
+    const [filterBy, setFilterBy] = useState({ txt: '', type: 'all' })
     const [noteContent, setNoteContent] = useState('')
-    const [filterBy, setFilterBy] = useState({ txt: '', type: 'all' }) // Filter state
-    const [errorMsg, setErrorMsg] = useState('')
+    const [noteType, setNoteType] = useState('NoteTxt')
 
     useEffect(() => {
         loadNotes()
     }, [])
 
-    function loadNotes() {
-        noteService.query()
-            .then(setNotes)
-            .catch(() => displayError('Failed to load notes'))
+    const loadNotes = () => {
+        noteService.query().then(setNotes)
     }
 
-    function onAddNote() {
-        if (!noteContent.trim()) {
-            displayError('Note content cannot be empty')
-            return
-        }
-
+    const onAddNote = () => {
         const newNote = noteService.getEmptyNote()
         newNote.type = noteType
         newNote.info = getNoteInfo(noteType, noteContent)
-
-        noteService.save(newNote)
-            .then(() => {
-                setNoteContent('')
-                loadNotes()
-            })
-            .catch(() => displayError('Failed to add note'))
-    }
-
-    function getNoteInfo(type, content) {
-        switch (type) {
-            case 'NoteTxt':
-                return { txt: content }
-            case 'NoteImg':
-                return { url: content, title: 'Image Note' }
-            case 'NoteTodos':
-                const todos = content.split(',').map(todo => ({
-                    txt: todo.trim(),
-                    done: false,
-                }))
-                return { todos }
-            default:
-                return { txt: content }
-        }
+        noteService.save(newNote).then(() => {
+            setNoteContent('')
+            loadNotes()
+        })
     }
 
     function onRemoveNote(noteId) {
-        noteService.remove(noteId)
-            .then(() => loadNotes())
-            .catch(() => displayError('Failed to remove note'))
-    }
-    
-    function onUpdateNote(updatedNote) {
-        noteService.save(updatedNote)
-            .then(() => loadNotes()) // Reload notes to reflect changes
-            .catch(() => displayError('Failed to update note'));
+        setNotes(prevNotes => prevNotes.filter(note => note.id !== noteId))
     }
 
+    function onEditNote(updatedNote) {
+        setNotes(prevNotes => prevNotes.map(note => note.id === updatedNote.id ? updatedNote : note))
+    }
+
+    
     function onTogglePin(noteId) {
-        noteService.togglePin(noteId)
-            .then(() => loadNotes())
-            .catch(() => displayError('Failed to pin/unpin note'))
-    }    
-
-    function displayError(message) {
-        setErrorMsg(message)
-        setTimeout(() => setErrorMsg(''), 3000)
-    }
-
-    // Filter Notes Based on Search and Type
-    function getFilteredNotes() {
-        const { txt, type } = filterBy
-    
-        return notes.filter(note => {
-            // Check if note.info exists and safely access its properties
-            const info = note.info || {}
-    
-            // Safely handle filtering for different note types
-            const matchesTxt = (
-                (info.txt && info.txt.toLowerCase().includes(txt.toLowerCase())) || // Text notes
-                (info.url && info.url.toLowerCase().includes(txt.toLowerCase())) || // Image/Video notes
-                (info.todos && info.todos.some(todo => todo.txt.toLowerCase().includes(txt.toLowerCase()))) // Todo notes
+        setNotes(prevNotes =>
+            prevNotes.map(note =>
+                note.id === noteId ? { ...note, isPinned: !note.isPinned } : note
             )
-    
-            const matchesType = type === 'all' || note.type === type // Type filter
-    
-            return matchesTxt && matchesType // Combine both filters
-        })
+        )
     }
-    
 
-    // Update Filter State
-    function onSetFilter(event) {
-        const { name, value } = event.target
+    const getNoteInfo = (type, content) => {
+        if (type === 'NoteTxt') return { txt: content }
+        if (type === 'NoteImg') return { url: content, title: '' }
+        if (type === 'NoteTodos') {
+            const todos = content.split(',').map(txt => ({ txt: txt.trim(), done: false }))
+            return { todos }
+        }
+        if (type === 'NoteVideo') return { url: content, title: '' }
+        return {}
+    }
+
+    const onSetFilter = ({ target }) => {
+        const { name, value } = target
         setFilterBy(prevFilter => ({ ...prevFilter, [name]: value }))
     }
 
+    const getFilteredNotes = () => {
+        return notes.filter(note => {
+            let matchesTxt = false
+            if (note.info) {
+                if (note.info.txt && note.info.txt.toLowerCase().includes(filterBy.txt.toLowerCase())) {
+                    matchesTxt = true
+                }
+                if (note.info.url && note.info.url.toLowerCase().includes(filterBy.txt.toLowerCase())) {
+                    matchesTxt = true
+                }
+            }
+            const matchesType = filterBy.type === 'all' || note.type === filterBy.type
+            return matchesTxt && matchesType
+        })
+    }
+
     return (
-        <section className="note-index">
-            {/* Note Addition */}
-            <div className="note-add">
+        <section>
+            <div>
                 <select value={noteType} onChange={(e) => setNoteType(e.target.value)}>
                     <option value="NoteTxt">Text Note</option>
                     <option value="NoteImg">Image Note</option>
-                    <option value="NoteTodos">Todo Note</option>
+                    <option value="NoteTodos">Todos Note</option>
+                    <option value="NoteVideo">Video Note</option>
                 </select>
                 <input
                     type="text"
-                    placeholder={getPlaceholder(noteType)}
+                    placeholder="Enter note content..."
                     value={noteContent}
                     onChange={(e) => setNoteContent(e.target.value)}
                 />
                 <button onClick={onAddNote}>Add Note</button>
             </div>
-
-            {/* Error Message */}
-            {errorMsg && <div className="error-msg">{errorMsg}</div>}
-
-            {/* Filter Section */}
-            <div className="note-filter">
+            <div>
                 <input
                     type="text"
                     name="txt"
@@ -137,32 +104,19 @@ export function NoteIndex() {
                 />
                 <select name="type" value={filterBy.type} onChange={onSetFilter}>
                     <option value="all">All Notes</option>
-                    <option value="NoteTxt">Text Notes</option>
-                    <option value="NoteImg">Image Notes</option>
-                    <option value="NoteTodos">Todo Notes</option>
+                    <option value="NoteTxt">Text</option>
+                    <option value="NoteImg">Images</option>
+                    <option value="NoteTodos">Todos</option>
+                    <option value="NoteVideo">Videos</option>
                 </select>
             </div>
-
-            {/* Notes List */}
             <NoteList
-                notes={notes} // Pass filtered notes to the list
+                notes={getFilteredNotes()} // Pass filtered notes to the list
                 onRemoveNote={onRemoveNote}
-                onUpdateNote={onUpdateNote}
+                onEditNote={onEditNote}
                 onTogglePin={onTogglePin}
+
             />
         </section>
     )
-}
-
-function getPlaceholder(noteType) {
-    switch (noteType) {
-        case 'NoteTxt':
-            return 'Enter your text...'
-        case 'NoteImg':
-            return 'Enter image URL...'
-        case 'NoteTodos':
-            return 'Enter comma-separated todos...'
-        default:
-            return 'Enter your note...'
-    }
 }
