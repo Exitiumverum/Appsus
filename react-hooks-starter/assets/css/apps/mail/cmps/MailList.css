@@ -1,1 +1,13 @@
  /* mail list */
+
+ .mail-list{
+    /* grid-area: 2 / 2 / 6 / 6;  */
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    width: 100%;
+ }
+
+ .mail-list.filter-open{
+   margin-left: 7.6em;
+ }

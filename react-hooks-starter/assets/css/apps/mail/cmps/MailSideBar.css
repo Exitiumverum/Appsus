@@ -1,0 +1,12 @@
+.mail-side-bar{
+    padding: 1.4em;
+    /* background-color: #f7f8fc; */
+    background-color: #eaf1fb;
+
+}
+
+.mail-side-bar svg{
+    color: #5f6368;
+    width: 2em;
+    height: 2em;
+}
