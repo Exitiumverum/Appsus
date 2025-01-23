@@ -21,5 +21,4 @@ export const demoNotes = [
         style: { backgroundColor: '#ccff90' },
         info: { txt: 'You can pin or delete notes.' },
     },
-      
 ];
