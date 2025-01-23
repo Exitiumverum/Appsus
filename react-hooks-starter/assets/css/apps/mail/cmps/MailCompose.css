@@ -31,10 +31,16 @@
     border-top: none;
     border-bottom: solid #eceff1;
     color: #747775;
+    resize: none;
 }
 
 
 .compose-content {
     border: none;
     height: 100%;
+    resize: none;
+}
+
+textarea:focus{
+    outline: none;
 }

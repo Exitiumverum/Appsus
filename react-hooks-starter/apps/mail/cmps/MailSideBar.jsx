@@ -3,7 +3,8 @@ const { useState, useEffect } = React
 export function MailSideBar(isFilterOpen, onOpenFilter) {
 
     const [isFilterOpenToEdit, setFilter] = useState(isFilterOpen)
-
+    
+    
     function handleMenuClick() {
         const MAIL_LIST = document.querySelector('.mail-list')
         const FILTER_SECTION = document.querySelector('.mail-filter-section')
@@ -20,6 +21,8 @@ export function MailSideBar(isFilterOpen, onOpenFilter) {
             FILTER_SECTION.classList.add('filter-open')
             MAIL_LIST.classList.add('filter-open')
         }
+        onOpenFilter()
+        setFilter(prevState => console.log(prevState))
     }
 
     return (
