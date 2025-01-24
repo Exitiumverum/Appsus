@@ -132,21 +132,21 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
             <div className="note-actions">
                 {!isEditing && (
                     <button className="btn-edit" onClick={() => setIsEditing(true)}>
-                        ✏️ Edit
+                        ✏️ 
                     </button>
                 )}
                 <button className="btn-pin" onClick={() => onTogglePin(note.id)}>
-                    {note.isPinned ? '📌 Unpin' : '📍 Pin'}
+                    {note.isPinned ? '📌' : '📍'}
                 </button>
                 <button className="btn-remove" onClick={() => onRemoveNote(note.id)}>
-                    🗑️ Delete
+                🚮 
                 </button>
                 <button onClick={() => sendToEmail(note)} className="btn-email">
-                    ✉️ Email
+                    ✉️
                 </button>
             </div>
             <div className="note-color-picker">
-                <label htmlFor={`color-${note.id}`}>🎨 Color:</label>
+                <label htmlFor={`color-${note.id}`}>🎨</label>
                 <input
                     id={`color-${note.id}`}
                     type="color"

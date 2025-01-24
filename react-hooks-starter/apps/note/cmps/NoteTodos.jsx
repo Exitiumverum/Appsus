@@ -1,3 +1,5 @@
+import '../../../assets/css/apps/note/cmps/NoteTodos.css'
+
 export function NoteTodos({ note, onUpdateNote }) {
     function onToggleTodo(idx) {
         const updatedTodos = note.info.todos.map((todo, i) =>
@@ -14,16 +16,17 @@ export function NoteTodos({ note, onUpdateNote }) {
     }
 
     return (
-        <ul>
+        <ul className="note-todos">
             {note.info.todos.map((todo, idx) => (
                 <li key={idx}>
                     <input
-                        type="checkbox"
+                        type="checkbox" id={`todo-${idx}`}
                         checked={todo.done}
                         onChange={() => onToggleTodo(idx)}
                     />
+                    <label htmlFor={`todo-${idx}`}></label>
                     <span>{todo.txt}</span>
-                    <button onClick={() => onDeleteTodo(idx)}>🗑️</button>
+                    <button onClick={() => onDeleteTodo(idx)}  title="Delete item" aria-label="Delete item">🚮</button>
                 </li>
             ))}
         </ul>

@@ -1,45 +1,149 @@
-/* NotePreview.css */
 .note-preview {
-    flex: 0 0 200px; /* Smaller note width */
-    background: #fff;
-    border-radius: 6px; /* Slightly smaller corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px; /* Compact padding */
-    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .note-preview:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .note-content {
-    font-size: 0.85rem; /* Smaller text */
     margin-bottom: 10px;
 }
 
 .note-actions {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 8px;
+    gap: 10px;
 }
 
 .note-actions button {
-    font-size: 0.8rem; /* Smaller action buttons */
-    padding: 5px 8px; /* Compact buttons */
-}
-
-.btn-email {
-    background-color: #f1c40f;
-    color: #fff;
     border: none;
-    border-radius: 4px;
+    background-color: #e8f0fe;
     padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
 }
 
-.btn-email:hover {
-    background-color: #d4ac0d;
+.note-actions button:hover {
+    background-color: #d2e3fc;
+}
+
+.note-color-picker {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.note-color-picker label {
+    font-size: 14px;
+    color: #5f6368;
+}
+
+.note-color-picker input[type="color"] {
+    appearance: none; /* Removes default styling */
+    border: none;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%; /* Makes the button circular */
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.note-color-picker input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0; /* Removes extra padding */
+}
+
+.note-color-picker input[type="color"]::-webkit-color-swatch {
+    border: none; /* Removes the swatch border */
+    border-radius: 50%;
+}
+
+.note-color-picker input[type="color"]:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+}
+
+.note-color-picker input[type="color"]:focus {
+    outline: 2px solid #4285f4; /* Adds a blue outline for focus */
+}
+
+/* Container for the editing area */
+.note-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between textarea and buttons */
+    background-color: #fff; /* Set a clean white background */
+    padding: 15px; /* Add padding for a better layout */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a card-like look */
+}
+
+.note-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between textarea and buttons */
+    background-color: #fff; /* Set a clean white background */
+    padding: 15px; /* Add padding for a better layout */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 100%; /* Ensure it fits within its parent container */
+    box-sizing: border-box; /* Include padding in size calculations */
+    overflow: hidden; /* Prevent content spilling */
+}
+
+/* Ensure textarea doesn't stretch too far */
+.note-edit textarea {
+    width: 100%; /* Full width */
+    min-height: 80px; /* Minimum height */
+    resize: vertical; /* Allow vertical resizing only */
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+    color: #202124; /* Dark text color */
+    border: 1px solid #dadce0; /* Subtle border */
+    border-radius: 4px; /* Rounded edges */
+    padding: 10px; /* Inner padding for a clean look */
+    box-sizing: border-box; /* Include padding in size */
+    outline: none; /* Remove outline */
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+    max-width: 100%; /* Prevent width overflow */
+}
+
+/* Container for buttons */
+.note-edit-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end; /* Align buttons to the right */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+/* Buttons styling */
+.note-edit-actions button {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    max-width: 100%; /* Ensure buttons don’t overflow */
+}
+
+.note-edit-actions button.btn-cancel {
+    background-color: #e8eaed;
+    color: #202124;
+}
+
+.note-edit-actions button:hover {
+    transform: translateY(-1px);
 }
