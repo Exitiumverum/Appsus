@@ -1,54 +1,45 @@
-/* NoteTodos.css */
-.note-todos {
-    padding: 5px;
-    font-size: 0.9rem;
-}
-
 .note-todos ul {
-    list-style: none; /* Remove the dots */
     padding: 0;
     margin: 0;
 }
 
 .note-todos li {
     display: flex;
-    align-items: center; /* Align items vertically */
-    justify-content: space-between; /* Spread items across the row */
-    padding: 5px 0; /* Add spacing between todos */
-    border-bottom: 1px solid #eee; /* Optional: separate todos visually */
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0;
 }
 
-.note-todos li::marker{
-    content: "•"; /* Change the bullet to a dot */
-    color: #888;
-    margin-right: 5px; /* Space between bullet and text */
-}
-
-.note-todos li:last-child {
-    border-bottom: none; /* Remove the border for the last todo */
-}
-
-.note-todos input[type='checkbox'] {
-    margin-right: 10px; /* Space between checkbox and text */
+.note-todos li input[type="checkbox"] {
+    transform: scale(1.2);
     cursor: pointer;
 }
 
-.note-todos span {
-    flex-grow: 1; /* Allow the text to fill available space */
-    font-size: 0.85rem; /* Slightly smaller text */
-    color: #444;
-    word-break: break-word; /* Handle long text */
+.note-todos li span {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    color: #3c4043;
+    font-weight: 400;
+    transition: color 0.2s ease;
 }
 
-.note-todos button {
-    background: none;
+.note-todos li span.done {
+    text-decoration: line-through;
+    color: #9aa0a6;
+    font-weight: 300; /* Softer look for completed tasks */
+}
+
+.note-todos li button {
     border: none;
-    color: #888;
-    font-size: 1rem;
+    background: none; /* Remove the background */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Optional: to align it perfectly */
+    font-size: 16px; /* Adjust icon size */
     cursor: pointer;
-    transition: color 0.2s;
+    color: #5f6368; /* Neutral color */
+    transition: color 0.2s ease;
 }
 
-.note-todos button:hover {
-    color: #d33;
+.note-todos li button:hover {
+    color: #d93025; /* Highlight with red when hovered */
 }
