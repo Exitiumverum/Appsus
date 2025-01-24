@@ -7,6 +7,8 @@ import { MailSideBar } from '../cmps/MailSideBar.jsx'
 import { MailCompose } from '../cmps/MailCompose.jsx'
 import { MailInbox } from '../cmps/Inbox.jsx'
 import { MailSent } from '../cmps/Sent.jsx'
+import { MailStarred } from '../cmps/Starred.jsx'
+import { MailDeatails } from '../cmps/MailDeatails.jsx'
 
 const { Route, Routes, Navigate, useLocation } = ReactRouterDOM
 const Router = ReactRouterDOM.HashRouter
@@ -22,9 +24,11 @@ export function MailIndex() {
     const [mails, setMails] = useState(null)
     const [isComposeOpen, setCompose] = useState(false)
     const [isFilterOpen, setIsFilterOpen] = useState(true)
-    const [filterCriteria, setFilterCriteria] = useState('')
+    // const [filterBy, setFilterBy] = useState(carService.getFilterFromSearchParams(searchParams))
+
 
     useEffect(() => {
+        // console.log('filterBy: ', filterBy)
         // console.log('running useEffect');
         
         document.body.classList.add('no-overflow') // Add class when component mounts
@@ -72,6 +76,10 @@ export function MailIndex() {
                                     return <MailInbox mails={mails} isFilterOpen={isFilterOpen}/>
                                 case '/mail/sent':
                                     return <MailSent mails={mails} isFilterOpen={isFilterOpen}/>
+                                case '/mail/starred':
+                                    return <MailStarred mails={mails} isFilterOpen={isFilterOpen}/>
+                                case '/mail/detailed:mailId':
+                                    return <MailDeatails />
                                 default:
                                     return <MailInbox mails={mails} isFilterOpen={isFilterOpen} />
                             }

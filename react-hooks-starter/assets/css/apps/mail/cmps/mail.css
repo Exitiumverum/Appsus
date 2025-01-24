@@ -3,7 +3,13 @@
     /* gap: 0.3em; */
     align-items: center;
     justify-content: space-between;
-    padding-left: 0;
+    margin-left: 0;
+    padding-left: 1em;
+    border-bottom: solid #eceff1;
+}
+
+.mail.isClicked{
+    background-color: #f7f8fc;
 }
 
 .mail-start{
@@ -15,7 +21,7 @@
 
 .mail:hover{
     cursor: pointer;
-    outline: solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 ul{

@@ -22,7 +22,9 @@ export function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/mail" element={<MailIndex />} >
                     <Route path="/mail/inbox" element={<MailIndex />} />
-                    {/* <Route path="/mail/starred" element={<Inbox />} /> */}
+                    <Route path="/mail/starred" element={<MailIndex />} />
+                    <Route path="/mail/details:mailId" element={<MailIndex />} />
+
                     {/* <Route path="/mail/snoozed" element={<Snoozed />} /> */}
                     {/* <Route path="/mail/important" element={<Important />} /> */}
                     <Route path="/mail/sent" element={<MailIndex />} />

@@ -30,6 +30,8 @@
 @import './apps/mail/cmps/mail-list-container.css';
 @import './apps/mail/cmps/mail-filter-section.css';
 @import './apps/mail/cmps/mail-body.css';
+@import './apps/mail/cmps/mail-btns.css';
+@import './apps/mail/cmps/starred.css';
 /* @import './apps/mail/cmps/MailList.css'; */
 
 /* compose components */

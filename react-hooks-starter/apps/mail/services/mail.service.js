@@ -1,19 +1,22 @@
 // mail service
 import { storageService } from "../../../services/storage.service.js"
 
-let lastMailId
+
+let starredMailIds = []
 
 const MAILS_KEY = 'mailDB'
 const loggedUser = {
     email: 'avi@gmail.com',
     fullname: 'Avi Cohen'
 }
-__createDemoMails()
+
+InitMails()
 
 export const mailService = {
     loggedUser,
     createSentMail,
-    getCurrentTimestamp
+    getCurrentTimestamp,
+    startMail
 }
 
 
@@ -60,6 +63,15 @@ export const mailService = {
 
 // lastMailId = 
 
+function InitMails(){
+    if(isMailsExist) __createDemoMails()
+}
+
+function isMailsExist() {
+    const existingMails = storageService.loadFromStorage(MAILS_KEY);
+    return Array.isArray(existingMails);
+}
+
 function createSentMail(EMAIL_DATA) {
     const { subject, content, to } = EMAIL_DATA
 
@@ -72,11 +84,27 @@ function createSentMail(EMAIL_DATA) {
         sentAt: getCurrentTimestamp(),
         removedAt: null,
         from: loggedUser.email,
-        to: to
+        to: to,
+        isStarred: false,
     }
     const existingMails = storageService.loadFromStorage(MAILS_KEY) || []
     existingMails.push(MAIL)
     storageService.saveToStorage(MAILS_KEY, existingMails)
+}
+
+function startMail(mailId) {
+    const existingMails = storageService.loadFromStorage(MAILS_KEY) || []
+    const mailIndex = existingMails.findIndex(mail => mail.id === mailId)
+
+    if (mailIndex !== -1) {
+        if (!existingMails[mailIndex].isStarred) {
+            existingMails[mailIndex].isStarred = true
+            
+            console.log('isStarred: ', existingMails[mailIndex].isStarred)
+            storageService.saveToStorage(MAILS_KEY, existingMails)
+            starredMailIds.push(existingMails[mailIndex].id)
+        }
+    }
 }
 
 function __createDemoMails() {
@@ -102,9 +130,11 @@ function __createDemoMails() {
             removedAt: null,
             from: randomEmail,
             name: randomName,
-            to: loggedUser.email
+            to: loggedUser.email,
+            isStarred: false,
         }
     })
+    
 
     storageService.saveToStorage(MAILS_KEY, mails)
 }
@@ -120,7 +150,7 @@ function getCurrentTimestamp() {
     return Math.floor(Date.now())
 }
 
-function __getRandomTimeStamp(){
+function __getRandomTimeStamp() {
     const oneYearAgo = Date.now() - (365 * 24 * 60 * 60 * 1000); // One year ago
     return Math.floor(Math.random() * (Date.now() - oneYearAgo + 1)) + oneYearAgo
 }
