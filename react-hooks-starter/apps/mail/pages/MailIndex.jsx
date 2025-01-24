@@ -10,85 +10,85 @@ import { MailSent } from '../cmps/Sent.jsx'
 import { MailStarred } from '../cmps/Starred.jsx'
 import { MailDeatails } from '../cmps/MailDeatails.jsx'
 
-const { Route, Routes, Navigate, useLocation } = ReactRouterDOM
+const { Route, Routes, Navigate, useLocation, useSearchParams } = ReactRouterDOM
 const Router = ReactRouterDOM.HashRouter
-
-
 
 const { useState, useEffect } = React
 
 export function MailIndex() {
-    const LOCATION = useLocation().pathname
-
+    const LOCATION = useLocation().pathname // Get current location
+    const [searchParams] = useSearchParams()  // Get query parameters
 
     const [mails, setMails] = useState(null)
     const [isComposeOpen, setCompose] = useState(false)
+    const [composeData, setComposeData] = useState({ subject: '', body: '' })
     const [isFilterOpen, setIsFilterOpen] = useState(true)
     // const [filterBy, setFilterBy] = useState(carService.getFilterFromSearchParams(searchParams))
 
 
     useEffect(() => {
-        // console.log('filterBy: ', filterBy)
         // console.log('running useEffect');
         
         document.body.classList.add('no-overflow') // Add class when component mounts
-        loadMails()
+        loadMails();
 
         return () => {
             document.body.classList.remove('no-overflow') // Remove class when component unmounts
-        }
+        };
     }, [LOCATION, isFilterOpen])
 
+    useEffect(() => {
+        // Check for query parameters and open the compose modal if present
+        const querySubject = searchParams.get('subject') || ''
+        const queryBody = searchParams.get('body') || ''
+        if (querySubject || queryBody) {
+            setComposeData({ subject: querySubject, body: queryBody })
+            setCompose(true) // Open the compose modal
+        }
+    }, [searchParams]) // Runs whenever query parameters change
+
     function loadMails() {
-        // console.log(mails)
-        storageService.query('mailDB')
+        storageService
+            .query('mailDB')
             .then(setMails)
             .catch((err) => {
-                console.log('err: ', err);
-
+                console.log('err: ', err)
             })
     }
 
-    function onOpenFilter() {
-        console.log('pressed')
-        // setIsFilterOpen(prevState => !prevState)
-        console.log(isFilterOpen);
-    }
-
     function onOpenCompose() {
-        setCompose(prevState => !prevState)
+        setCompose((prevState) => !prevState)
     }
 
-    
-
-    if (!mails) return <div>Loading...</div>
+    if (!mails) return <div>Loading...</div>;
     return (
         <section className="mail-index">
-            <MailSideBar isFilterOpen={isFilterOpen} onOpenFilter={() => onOpenFilter} />
-            <div className='mail-header-body'>
+            <MailSideBar isFilterOpen={isFilterOpen} onOpenFilter={() => setIsFilterOpen(!isFilterOpen)} />
+            <div className="mail-header-body">
                 <MailHeader />
                 <div className="mail-body">
                     <MailFilter isFilterOpen={isFilterOpen} isComposeOpen={isComposeOpen} onOpenCompose={onOpenCompose} />
                     <React.Fragment>
                         {(() => {
-                            switch(LOCATION) {
+                            switch (LOCATION) {
                                 case '/mail/inbox':
-                                    return <MailInbox mails={mails} isFilterOpen={isFilterOpen}/>
+                                    return <MailInbox mails={mails} isFilterOpen={isFilterOpen} />;
                                 case '/mail/sent':
                                     return <MailSent mails={mails} isFilterOpen={isFilterOpen}/>
-                                case '/mail/starred':
-                                    return <MailStarred mails={mails} isFilterOpen={isFilterOpen}/>
-                                case '/mail/detailed:mailId':
-                                    return <MailDeatails />
                                 default:
-                                    return <MailInbox mails={mails} isFilterOpen={isFilterOpen} />
+                                    return <MailInbox mails={mails} isFilterOpen={isFilterOpen} />;
                             }
                         })()}
-                        {isComposeOpen && <MailCompose />}
+                        {isComposeOpen && (
+                            <MailCompose
+                                to=""
+                                subject={composeData.subject}
+                                content={composeData.body}
+                            />
+                        )}
                     </React.Fragment>
                 </div>
             </div>
         </section>
     )
 }
-

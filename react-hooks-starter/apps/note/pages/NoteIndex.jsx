@@ -20,7 +20,7 @@ export function NoteIndex() {
     }
 
     function onAddNote() {
-        if (!noteContent.trim()) {
+        if (!noteContent.trim() && noteType !== 'NoteCanvas') {
             displayError('Note content cannot be empty')
             return
         }
@@ -51,7 +51,11 @@ export function NoteIndex() {
                     }))
                 }
             case 'NoteVideo':
-                return { url: content, title: 'Video Note' } // Handle video notes
+                return { url: content, title: 'Video Note' }
+            case 'NoteAudio':
+                return { url: content, title: 'Audio Note' }
+            case 'NoteCanvas':
+                return { title: 'New Canvas', dataUrl: '' }
             default:
                 return { txt: content }
         }
@@ -109,7 +113,9 @@ export function NoteIndex() {
                     <option value="NoteTxt">Text Note</option>
                     <option value="NoteImg">Image Note</option>
                     <option value="NoteTodos">Todo Note</option>
-                    <option value="NoteVideo">Video Note</option> {/* Add video note option */}
+                    <option value="NoteVideo">Video Note</option>
+                    <option value="NoteAudio">Audio Note</option>
+                    {/* <option value="NoteCanvas">Canvas Note</option> */}
                 </select>
                 <input
                     type="text"
@@ -137,7 +143,9 @@ export function NoteIndex() {
                     <option value="NoteTxt">Text Notes</option>
                     <option value="NoteImg">Image Notes</option>
                     <option value="NoteTodos">Todo Notes</option>
-                    <option value="NoteVideo">Video Notes</option> {/* Add video note option */}
+                    <option value="NoteVideo">Video Notes</option>
+                    <option value="NoteAudio">Audio Notes</option>
+                    <option value="NoteCanvas">Canvas Notes</option>
                 </select>
             </div>
 
@@ -161,7 +169,11 @@ function getPlaceholder(noteType) {
         case 'NoteTodos':
             return 'Enter comma-separated todos...'
         case 'NoteVideo':
-            return 'Enter video URL...' // Add video note placeholder
+            return 'Enter video URL...'
+        case 'NoteAudio':
+            return 'Enter audio URL...'
+        case 'NoteCanvas':
+            return 'Draw your note...'
         default:
             return 'Enter your note...'
     }
