@@ -11,6 +11,7 @@
 
 /* Pages */
 @import './pages/home.css';
+@import './pages/about.css';
 
 /* @import './apps/note/pages/NoteIndex.css'; */
 
@@ -42,3 +43,6 @@
 @import './apps/note//cmps/NoteReview.css';
 @import './apps/note//cmps/NoteImg.css';
 @import './apps/note//cmps/NoteTodos.css';
+@import './apps/note//cmps/NoteTxt.css';
+@import './apps/note//cmps/NoteVideo.css';
+@import './apps/note//cmps/NoteAudio.css';

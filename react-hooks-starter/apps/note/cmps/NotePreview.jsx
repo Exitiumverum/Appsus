@@ -2,6 +2,9 @@ import { NoteImg } from './NoteImg.jsx';
 import { NoteTodos } from './NoteTodos.jsx';
 import { NoteTxt } from './NoteText.jsx';
 import { NoteVideo } from './NoteVideo.jsx';
+import { NoteAudio } from './NoteAudio.jsx';
+import { NoteCanvas } from './NoteCanvas.jsx'; 
+
 const { useState } = React;
 const { useNavigate } = ReactRouterDOM;
 
@@ -117,7 +120,11 @@ export function NotePreview({ note, onRemoveNote, onUpdateNote, onTogglePin }) {
             case 'NoteTodos':
                 return <NoteTodos note={note} onUpdateNote={onUpdateNote} />;
             case 'NoteVideo': // Add support for video notes
-                return <NoteVideo note={note} />;
+                return <NoteVideo note={note} />
+            case 'NoteAudio': // Add support for audio notes
+                return <NoteAudio note={note} />
+            case 'NoteCanvas': // Add support for canvas notes
+                return <NoteCanvas note={note} onUpdateNote={onUpdateNote} />
             default:
                 return <p>Unsupported note type</p>;
         }

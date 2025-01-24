@@ -11,14 +11,14 @@ export const demoNotes = [
         type: 'NoteTxt',
         isPinned: false,
         style: { backgroundColor: '#f28b82' },
-        info: { txt: 'Remember to stay hydrated and take breaks!' },
+        info: { txt: 'Don’t forget to review your daily goals. Stay productive!' },
     },
     {
         id: 'n103',
         type: 'NoteTxt',
         isPinned: false,
         style: { backgroundColor: '#ccff90' },
-        info: { txt: 'Did you know? You can customize these notes to your liking!' },
+        info: { txt: 'Pro tip: Use categories to organize your notes effectively.' },
     },
     {
         id: 'n104',
@@ -26,11 +26,11 @@ export const demoNotes = [
         isPinned: false,
         style: { backgroundColor: '#cbf0f8' },
         info: {
-            label: 'Grocery List',
+            label: 'Vacation Checklist',
             todos: [
-                { txt: 'Buy milk', done: false },
-                { txt: 'Pick up eggs', done: true },
-                { txt: 'Get fresh veggies', done: false },
+                { txt: 'Book flights', done: true },
+                { txt: 'Reserve hotel', done: false },
+                { txt: 'Pack luggage', done: false },
             ],
         },
     },
@@ -40,8 +40,8 @@ export const demoNotes = [
         isPinned: true,
         style: { backgroundColor: '#fef4c7' },
         info: { 
-            url: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',
-            title: 'Sunset in the mountains',
+            url: 'https://images.unsplash.com/photo-1593642532842-98d0fd5ebc1a',
+            title: 'Coding Workspace Inspiration',
         },
     },
     {
@@ -50,8 +50,8 @@ export const demoNotes = [
         isPinned: false,
         style: { backgroundColor: '#e6ccff' },
         info: { 
-            url: 'https://www.youtube.com/embed/oHg5SJYRHA0',
-            title: 'Relaxing Music for Coding',
+            url: 'https://www.youtube.com/embed/Ke90Tje7VS0',
+            title: 'Learn React in 10 Minutes',
         },
     },
     {
@@ -60,8 +60,8 @@ export const demoNotes = [
         isPinned: false,
         style: { backgroundColor: '#f8f9fa' },
         info: { 
-            url: 'https://images.unsplash.com/photo-1521335759396-7604c9f2a11a',
-            title: 'Morning Coffee Vibes',
+            url: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',
+            title: 'Sunset in the Mountains',
         },
     },
     {
@@ -70,11 +70,11 @@ export const demoNotes = [
         isPinned: false,
         style: { backgroundColor: '#ffd6a5' },
         info: {
-            label: 'Project Tasks',
+            label: 'Team Meeting Agenda',
             todos: [
-                { txt: 'Set up React project', done: true },
-                { txt: 'Install dependencies', done: true },
-                { txt: 'Write demo data', done: false },
+                { txt: 'Discuss project updates', done: true },
+                { txt: 'Review feedback', done: false },
+                { txt: 'Plan next sprint', done: false },
             ],
         },
     },
@@ -84,8 +84,8 @@ export const demoNotes = [
         isPinned: false,
         style: { backgroundColor: '#d0f4de' },
         info: { 
-            url: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7',
-            title: 'Adventurous Forest Trail',
+            url: 'https://images.unsplash.com/photo-1574169208507-8437614484d8',
+            title: 'Nature Walk',
         },
     },
     {
@@ -94,8 +94,8 @@ export const demoNotes = [
         isPinned: false,
         style: { backgroundColor: '#c3f0ca' },
         info: { 
-            url: 'https://www.youtube.com/embed/3jWRrafhO7M',
-            title: 'How to Use React Context API',
+            url: 'https://www.youtube.com/embed/tgbNymZ7vqY',
+            title: 'Pomodoro Timer for Productivity',
         },
     },
     {
@@ -105,17 +105,17 @@ export const demoNotes = [
         style: { backgroundColor: '#e3f2fd' },
         info: { 
             url: 'https://images.unsplash.com/photo-1616627452673-2e5b9295e378',
-            title: 'Peaceful Beach Scene',
+            title: 'Relaxing Beach',
         },
     },
     {
         id: 'n112',
-        type: 'NoteVideo',
+        type: 'NoteAudio',
         isPinned: true,
         style: { backgroundColor: '#ffe6e6' },
         info: { 
-            url: 'https://www.youtube.com/embed/f1x9lgX8GaE',
-            title: 'JavaScript for Beginners',
+            url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+            title: 'Relaxing Background Music',
         },
     },
     {
@@ -123,7 +123,7 @@ export const demoNotes = [
         type: 'NoteTxt',
         isPinned: false,
         style: { backgroundColor: '#fff3e0' },
-        info: { txt: 'Need ideas? Write down your top three goals for today!' },
+        info: { txt: '“The best way to predict the future is to create it.” — Peter Drucker' },
     },
     {
         id: 'n114',
@@ -131,8 +131,8 @@ export const demoNotes = [
         isPinned: false,
         style: { backgroundColor: '#d7d8ed' },
         info: { 
-            url: 'https://images.unsplash.com/photo-1561154464-f18c17c332a0',
-            title: 'Aesthetic Workspace',
+            url: 'https://images.unsplash.com/photo-1544717305-2782549b5136',
+            title: 'Minimal Desk Setup',
         },
     },
     {
@@ -141,9 +141,45 @@ export const demoNotes = [
         isPinned: false,
         style: { backgroundColor: '#fbe7c6' },
         info: { 
-            url: 'https://www.youtube.com/embed/tgbNymZ7vqY',
-            title: 'Pomodoro Timer for Productivity',
+            url: 'https://www.youtube.com/embed/3jWRrafhO7M',
+            title: 'React Context API Deep Dive',
+        },
+    },
+    {
+        id: 'n116',
+        type: 'NoteAudio',
+        isPinned: false,
+        style: { backgroundColor: '#f2e7fe' },
+        info: { 
+            url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+            title: 'Podcast: The Future of Tech',
+        },
+    },
+    {
+        id: 'n117',
+        type: 'NoteTxt',
+        isPinned: false,
+        style: { backgroundColor: '#f4fffd' },
+        info: { txt: 'Brainstorm ideas for the new project launch.' },
+    },
+    {
+        id: 'n118',
+        type: 'NoteImg',
+        isPinned: false,
+        style: { backgroundColor: '#ffe4e6' },
+        info: { 
+            url: 'https://images.unsplash.com/photo-1589210565655-d5bb5e60f6a6',
+            title: 'Inspirational Quote',
+        },
+    },
+    {
+        id: 'n119',
+        type: 'NoteAudio',
+        isPinned: false,
+        style: { backgroundColor: '#e2f7f2' },
+        info: { 
+            url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+            title: 'Meditation Music',
         },
     },
 ];
-
