@@ -1,6 +1,8 @@
 const { useEffect, useState } = React
 import { noteService } from '../services/note.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
+import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
+
 
 export function NoteIndex() {
     const [notes, setNotes] = useState([])
@@ -14,6 +16,7 @@ export function NoteIndex() {
     }, [])
 
     function loadNotes() {
+        console.log('Loading notes...', showSuccessMsg)
         noteService.query()
             .then(setNotes)
             .catch(() => displayError('Failed to load notes'))
@@ -35,6 +38,7 @@ export function NoteIndex() {
                 loadNotes()
             })
             .catch(() => displayError('Failed to add note'))
+
     }
 
     function getNoteInfo(type, content) {
@@ -65,18 +69,21 @@ export function NoteIndex() {
     function onRemoveNote(noteId) {
         noteService.remove(noteId)
             .then(() => loadNotes())
+            .then(() => showSuccessMsg('Note removed successfully'))
             .catch(() => displayError('Failed to remove note'))
     }
 
     function onUpdateNote(updatedNote) {
         noteService.updateNote(updatedNote)
             .then(() => loadNotes())
+            .then(() => showSuccessMsg('Note updated successfully'))
             .catch(() => displayError('Failed to update note'))
     }
 
     function onTogglePin(noteId) {
         noteService.togglePin(noteId)
             .then(() => loadNotes())
+            .then(() => showSuccessMsg('Note pinned/unpinned successfully'))
             .catch(() => displayError('Failed to pin/unpin note'))
     }
 
