@@ -15,6 +15,12 @@ console
 // Note App cmps
 import { NoteIndex } from "./apps/note/pages/NoteIndex.jsx";
 import { BookIndex } from "./apps/books/react-template-proj/cmps/BookIndex.jsx";
+import { BookDetails } from './apps/books/react-template-proj/cmps/BookDetails.jsx';
+// import { Home2 } from './apps/books/react-template-proj/pages/Home.jsx'
+import { AboutUs } from './apps/books/react-template-proj/cmps/AboutUs.jsx'
+import { BookDashboard } from './apps/books/react-template-proj/cmps/BookDashboard.jsx'
+
+
 
 export function App() {
     return (
@@ -41,8 +47,17 @@ export function App() {
 
                     {/* Book App */}
                     <Route path="/book" element={<BookIndex />} />
+                    <Route path="/book/:bookId" element={<BookDetails />} />
+                    {/* <Route path="/dashboard" element={<BookDashboard />} /> */}
+                    {/* <Route path="/home2" element={<Home2 />} /> */}
+
+
                 </Routes>
             </section>
         </Router>
     );
+
+
 }
+
+

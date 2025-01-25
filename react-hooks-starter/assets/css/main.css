@@ -48,3 +48,22 @@
 @import './apps/note//cmps/NoteTxt.css';
 @import './apps/note//cmps/NoteVideo.css';
 @import './apps/note//cmps/NoteAudio.css';
+
+/* @import '../../apps/books/react-template-proj/assets/style/main.css' */
+
+/* Components */
+@import '../../apps/books/react-template-proj/assets/style/cmps/about.css/books-details.css';
+/* @import '../../apps/books/react-template-proj/assets/style/cmps/app-header.css'; */
+@import '../../apps/books/react-template-proj/assets/style/cmps/books-details.css';
+@import '../../apps/books/react-template-proj/assets/style/cmps/books-filter.css';
+@import '../../apps/books/react-template-proj/assets/style/cmps/books-index.css';
+@import '../../apps/books/react-template-proj/assets/style/cmps/books-list.css';
+@import '../../apps/books/react-template-proj/assets/style/cmps/dash-board.css';
+@import '../../apps/books/react-template-proj/assets/style/cmps/dynamic.css';
+@import '../../apps/books/react-template-proj/assets/style/cmps/edit.css';
+@import '../../apps/books/react-template-proj/assets/style/cmps/google-books.css';
+/* @import '../../apps/books/react-template-proj/assets/style/cmps/header.css'; */
+@import '../../apps/books/react-template-proj/assets/style/cmps/home.css';
+@import '../../apps/books/react-template-proj/assets/style/cmps/review.css';
+@import '../../apps/books/react-template-proj/assets/style/cmps/UserMsg.css';
+
