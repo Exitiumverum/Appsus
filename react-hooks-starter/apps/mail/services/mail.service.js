@@ -10,13 +10,15 @@ const loggedUser = {
     fullname: 'Avi Cohen'
 }
 
-InitMails()
+// InitMails()
 
 export const mailService = {
     loggedUser,
     createSentMail,
     getCurrentTimestamp,
-    startMail
+    startMail,
+    MailRead,
+    InitMails
 }
 
 
@@ -63,14 +65,12 @@ export const mailService = {
 
 // lastMailId = 
 
-function InitMails(){
-    if(isMailsExist) __createDemoMails()
+function InitMails() {
+    if (!storageService.loadFromStorage(MAILS_KEY)) __createDemoMails()
+    else return
 }
 
-function isMailsExist() {
-    const existingMails = storageService.loadFromStorage(MAILS_KEY);
-    return Array.isArray(existingMails);
-}
+
 
 function createSentMail(EMAIL_DATA) {
     const { subject, content, to } = EMAIL_DATA
@@ -99,7 +99,22 @@ function startMail(mailId) {
     if (mailIndex !== -1) {
         if (!existingMails[mailIndex].isStarred) {
             existingMails[mailIndex].isStarred = true
-            
+
+            console.log('isStarred: ', existingMails[mailIndex].isStarred)
+            storageService.saveToStorage(MAILS_KEY, existingMails)
+            starredMailIds.push(existingMails[mailIndex].id)
+        }
+    }
+}
+
+function MailRead(mailId) {
+    const existingMails = storageService.loadFromStorage(MAILS_KEY) || []
+    const mailIndex = existingMails.findIndex(mail => mail.id === mailId)
+
+    if (mailIndex !== -1) {
+        if (!existingMails[mailIndex].isRead) {
+            existingMails[mailIndex].isRead = true
+
             console.log('isStarred: ', existingMails[mailIndex].isStarred)
             storageService.saveToStorage(MAILS_KEY, existingMails)
             starredMailIds.push(existingMails[mailIndex].id)
@@ -134,7 +149,7 @@ function __createDemoMails() {
             isStarred: false,
         }
     })
-    
+
 
     storageService.saveToStorage(MAILS_KEY, mails)
 }
