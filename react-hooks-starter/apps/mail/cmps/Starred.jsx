@@ -4,6 +4,8 @@ import { MailList } from "../cmps/MailList.jsx"
 
 export function MailStarred({ mails, isFilterOpen }) {
 
+    console.log("starredMail");
+    
     const { fullname, email } = mailService.loggedUser
     // console.log(mails);
 
@@ -12,8 +14,8 @@ export function MailStarred({ mails, isFilterOpen }) {
 
 
     let filteredMails = mails.filter((mail) => mail.isStarred === true)
-    console.log('Inbox: ', filteredMails)
-    console.log('Inbox: ', email);
+    console.log('Satrred: ', filteredMails)
+    console.log('Satrred: ', email);
 
     // console.log(INBOX_BTN);
 

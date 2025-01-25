@@ -8,9 +8,9 @@ import { MailCompose } from '../cmps/MailCompose.jsx'
 import { MailInbox } from '../cmps/Inbox.jsx'
 import { MailSent } from '../cmps/Sent.jsx'
 import { MailStarred } from '../cmps/Starred.jsx'
-import { MailDeatails } from '../cmps/MailDeatails.jsx'
+import { MailDetails } from '../cmps/MailDetails.jsx'
 
-const { Route, Routes, Navigate, useLocation, useSearchParams } = ReactRouterDOM
+const { Route, Routes, Navigate, useLocation, useSearchParams, useParams } = ReactRouterDOM
 const Router = ReactRouterDOM.HashRouter
 
 const { useState, useEffect } = React
@@ -27,9 +27,9 @@ export function MailIndex() {
 
 
     useEffect(() => {
-        // console.log('running useEffect');
         
         document.body.classList.add('no-overflow') // Add class when component mounts
+        mailService.InitMails()
         loadMails();
 
         return () => {
@@ -75,6 +75,10 @@ export function MailIndex() {
                                     return <MailInbox mails={mails} isFilterOpen={isFilterOpen} />;
                                 case '/mail/sent':
                                     return <MailSent mails={mails} isFilterOpen={isFilterOpen}/>
+                                case '/mail/starred':
+                                    return <MailStarred mails={mails} isFilterOpen={isFilterOpen}/>
+                                case `/mail/${useParams().mailId}`:
+                                    return <MailDetails mailId={useParams().mailId} />
                                 default:
                                     return <MailInbox mails={mails} isFilterOpen={isFilterOpen} />;
                             }

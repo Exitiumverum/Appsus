@@ -1,6 +1,6 @@
 import { mailService } from "../services/mail.service.js"
 
-export function MailDeatails(mailId) {
+export function MailDetails() {
     
     return (
         <div className="mail-details">
